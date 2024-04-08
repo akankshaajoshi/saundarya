@@ -1,0 +1,35 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.3rem 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    background-color: rgba(169, 121, 108, 0.85);
+    border-radius: 20px;
+}
+
+.logo {
+    font-size: 2.5rem;
+    color: white;
+    font-weight: 700;
+    cursor: default;
+    text-decoration: none;
+}
+
+.navbar a {
+    font-size: 1.2rem;
+    color: white;
+    margin-left: 4rem;
+    font-weight: 100;
+    text-decoration: none;
+}
+
+.navbar a:hover,
+.navbar a.active {
+    color: white;
+    text-decoration: underline;
+}
