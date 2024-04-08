@@ -9,6 +9,7 @@ const xss = require("xss-clean");
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController");
 const authRouter = require("./routes/authRoutes");
+const paletteRouter = require("./routes/paletteRoutes");
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -43,6 +44,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/palette", paletteRouter);
 
 app.all("*", (req, res, next) => {
   next(new AppError("Can't find the page on server."));
