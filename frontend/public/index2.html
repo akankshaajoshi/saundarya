@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Web site created using create-react-app" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-face-aframe.prod.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>
+      var globalColor;
+      var select = "lipGltf";
+
+      function openNav() {
+        document.getElementById("mySidenav").style.width = "300px";
+      }
+
+      function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+      }
+
+      AFRAME.registerComponent("model-color", {
+        schema: {
+          color: { type: "color", default: "#185ea2" },
+        },
+        init: function () {
+          this.el.addEventListener("model-loaded", () => this.update());
+        },
+        update: function () {
+          var object3D = this.el.object3D;
+          var color = new THREE.Color(this.data.color);
+          object3D.traverse((node) => {
+            if (node.isMesh) {
+              node.material.color = color;
+            }
+          });
+        },
+      });
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const defaultPalette = [
+          {
+            name: "Spring",
+            palettes: [
+              "#ffcb77",
+              "#a2d729",
+              "#75d2f3",
+              "#ff926b",
+              "#f9ed69",
+              "#89cff0",
+              "#ffc1e0",
+              "#f4a460",
+              "#adff2f",
+              "#ff6347",
+            ],
+          },
+          {
+            name: "Summer",
+            palettes: [
+              "#87ceeb",
+              "#ff6961",
+              "#ffd700",
+              "#20b2aa",
+              "#66cdaa",
+              "#ba55d3",
+              "#7fffd4",
+              "#fa8072",
+              "#add8e6",
+              "#ff8c00",
+            ],
+          },
+          {
+            name: "Autumn",
+            palettes: [
+              "#d2691e",
+              "#ff4500",
+              "#daa520",
+              "#8b4513",
+              "#800000",
+              "#bdb76b",
+              "#556b2f",
+              "#8fbc8f",
+              "#2e8b57",
+            ],
+          },
+          {
+            name: "Winter",
+            palettes: [
+              "#4682b4",
+              "#000080",
+              "#008080",
+              "#4169e1",
+              "#0000ff",
+              "#87cefa",
+              "#1e90ff",
+              "#6495ed",
+              "#b0e0e6",
+              "#87ceeb",
+            ],
+          },
+        ];
+
+        const container = document.getElementById("default");
+        defaultPalette.forEach((palette) => {
+          const scrollableDiv = document.createElement("div");
+          scrollableDiv.className = "scrollable-div";
+          const text = document.createElement("div");
+          text.textContent = palette.name;
+          scrollableDiv.appendChild(text);
+          const boxes = document.createElement("div");
+          boxes.className = "boxes";
+          scrollableDiv.appendChild(boxes);
+          palette.palettes.forEach((color) => {
+            const box = document.createElement("div");
+            box.className = "box";
+            box.style.backgroundColor = color;
+            box.addEventListener("click", () => {
+              const customEvent = new CustomEvent("colorChange", { detail: color });
+              document.dispatchEvent(customEvent);
+            });
+            boxes.appendChild(box);
+          });
+          container.appendChild(scrollableDiv);
+        });
+
+        const token = document.cookie
+          .split("; ")
+          .find((row) => row.startsWith("jwt"))
+          .split("=")[1];
+
+        fetch("http://localhost:8000/api/v1/palette", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MTQxOTBkOTVhNDZjZmJhMDI3NDcyZSIsImlhdCI6MTcxMjY1MTMxNiwiZXhwIjoxNzEyOTEwNTE2fQ.A6SGp_oqNZc5ClT2d4SzqJwFJ4p7dxPW2vCQUplIzlo"}`,
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            const palettes = data.data.palettes;
+            const container = document.getElementById("saved");
+            palettes.forEach((palette) => {
+              const scrollableDiv = document.createElement("div");
+              scrollableDiv.className = "scrollable-div";
+              const text = document.createElement("div");
+              text.textContent = palette.name;
+              scrollableDiv.appendChild(text);
+              const boxes = document.createElement("div");
+              boxes.className = "boxes";
+              scrollableDiv.appendChild(boxes);
+              palette.palettes.forEach((color) => {
+                const box = document.createElement("div");
+                box.className = "box";
+                box.style.backgroundColor = color;
+                box.addEventListener("click", () => {
+                  const customEvent = new CustomEvent("colorChange", { detail: color });
+                  document.dispatchEvent(customEvent);
+                });
+                boxes.appendChild(box);
+              });
+              container.appendChild(scrollableDiv);
+            });
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      });
+
+      function toggleTshirtSelect() {
+        select = "tshirtGltf";
+      }
+      function toggleLipSelect() {
+        select = "lipGltf";
+      }
+
+      document.addEventListener("colorChange", (event) => {
+        const color = event.detail;
+        globalColor = color;
+        const arItem = document.getElementById(select);
+        console.log(arItem);
+        arItem.setAttribute("model-color", { color: color });
+      });
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const list = ["glasses2", "lip", "tshirt"];
+        const visibles = [true, false, false];
+        const setVisible = (button, entities, visible) => {
+          if (visible) {
+            button.classList.add("selected");
+          } else {
+            button.classList.remove("selected");
+          }
+          entities.forEach((entity) => {
+            entity.setAttribute("visible", visible);
+          });
+        };
+        list.forEach((item, index) => {
+          const button = document.querySelector("#" + item);
+          const entities = document.querySelectorAll("." + item + "-entity");
+          setVisible(button, entities, visibles[index]);
+          button.addEventListener("click", () => {
+            visibles[index] = !visibles[index];
+            console.log(item);
+            setVisible(button, entities, visibles[index]);
+          });
+        });
+      });
+    </script>
+    <style>
+      .sidenav:hover {
+        width: 230px;
+      }
+      .example-container {
+        overflow: hidden;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+      .options-panel {
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 2;
+        margin: 10px;
+      }
+      .options-panel-2 {
+        position: fixed;
+        right: 0;
+        top: 0;
+        z-index: 2;
+      }
+      .options-panel img {
+        border: solid 2px;
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        cursor: pointer;
+      }
+      .options-panel img.selected {
+        border-color: green;
+      }
+
+      body {
+        font-family: "Lato", sans-serif;
+      }
+
+      .sidenav {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        z-index: 999;
+        top: 0;
+        right: 0;
+        background-color: #111;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+      }
+
+      .sidenav a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+      }
+
+      .sidenav a:hover {
+        color: #f1f1f1;
+      }
+
+      .sidenav .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+      }
+
+      .scrollable-div {
+        display: flex;
+        flex-direction: column;
+        color: white;
+        gap: 10px;
+        overflow-x: auto;
+        width: 250px; /* Adjust this value to control how many boxes are visible at once */
+        margin: 10px;
+        border: 1px solid #f1f1f1;
+        margin-right: 10px;
+        padding: 10px 10px 10px 0;
+      }
+
+      .scrollable-div div {
+        margin-left: 20px;
+      }
+
+      .flexbox {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .boxes {
+        display: flex;
+        align-items: left;
+        flex-direction: row;
+      }
+
+      *::-webkit-scrollbar {
+        display: none;
+      }
+
+      * {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+      }
+
+      .box {
+        flex: 0 0 auto;
+        width: 50px;
+        height: 50px;
+        background-color: #f1f1f1;
+      }
+
+      .sidebar-button {
+        padding: 10px;
+        margin: auto;
+        background-color: white;
+        color: black;
+        border-radius: 10px;
+      }
+
+      .sidebar-button:hover {
+        background-color: gray;
+        color: black;
+        cursor: pointer;
+      }
+    </style>
+    <title>React App</title>
+  </head>
+  <body>
+    <div class="example-container">
+      <div class="options-panel-2">
+        <span
+          style="
+            font-size: 40px;
+            padding: 5px;
+            margin: 10px;
+            color: white;
+            background-color: black;
+            border-radius: 10px;
+            cursor: pointer;
+            float: right;
+          "
+          onclick="openNav()"
+          >&#9776;</span
+        >
+      </div>
+      <!-- TODO: Finished component -->
+      <div class="options-panel">
+        <img
+          id="glasses2"
+          src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/glasses2/thumbnail.png"
+        />
+        <img id="lip" src="https://cdn.arteza.com/blogArticle/20/09/Whs1gwHBoJK1p4NT.jpg" />
+        <img id="tshirt" src="https://5.imimg.com/data5/UK/VR/AX/SELLER-3518303/blank-t-shirt-500x500.jpg" />
+      </div>
+      <a-scene
+        mindar-face
+        embedded
+        color-space="sRGB"
+        renderer="colorManagement: true, physicallyCorrectLights"
+        vr-mode-ui="enabled: false"
+        device-orientation-permission-ui="enabled: false"
+      >
+        <a-assets>
+          <a-asset-item
+            id="glassesModel2"
+            src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/glasses2/scene.gltf"
+          ></a-asset-item>
+          <a-asset-item id="lipModel" src="http://localhost:8000/lips/scene.gltf"></a-asset-item>
+          <a-asset-item id="tshirtModel" src="http://localhost:8000/tshirt/scene.gltf"></a-asset-item>
+        </a-assets>
+        <a-camera active="false" position="0 0 0"></a-camera>
+        head occluder
+        <a-entity mindar-face-target="anchorIndex: 168">
+          <a-gltf-model
+            mindar-face-occluder
+            position="0 -0.3 0.15"
+            rotation="0 0 0"
+            scale="0.065 0.065 0.065"
+            src="#headModel"
+          ></a-gltf-model>
+        </a-entity>
+        <a-entity mindar-face-target="anchorIndex: 168">
+          <a-gltf-model
+            rotation="0 -90 0"
+            position="0 -0.3 0"
+            scale="0.6 0.6 0.6"
+            src="#glassesModel2"
+            class="glasses2-entity"
+            visible="false"
+          ></a-gltf-model>
+        </a-entity>
+        <a-entity mindar-face-target="anchorIndex: 14">
+          <a-gltf-model
+            src="#lipModel"
+            id="lipGltf"
+            position="0 -0.01 0"
+            scale="0.08 0.06 0.06"
+            class="lip-entity"
+            visible="false"
+            model-color="color: brown"
+          ></a-gltf-model>
+        </a-entity>
+        <a-entity mindar-face-target="anchorIndex: 175">
+          <a-gltf-model
+            position="0 -11.5 0"
+            scale="5 7 7"
+            id="tshirtGltf"
+            src="#tshirtModel"
+            class="tshirt-entity"
+            visible="false"
+            model-color="color: black"
+          ></a-gltf-model>
+        </a-entity>
+      </a-scene>
+    </div>
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <a href="#">Select Item</a>
+      <div class="flexbox">
+        <button id="tshirt-select" class="sidebar-button" onclick="toggleTshirtSelect()">Tshirt</button>
+        <button id="lip-select" class="sidebar-button" onclick="toggleLipSelect()">Lip</button>
+      </div>
+      <div id="saved">
+        <a href="#">Saved Palettes</a>
+      </div>
+
+      <div id="default">
+        <a href="#" id="default">Default Palettes</a>
+      </div>
+    </div>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+  </body>
+</html>

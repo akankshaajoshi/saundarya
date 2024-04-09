@@ -1,6 +1,5 @@
 const express = require("express");
 const morgan = require("morgan");
-const helmet = require("helmet");
 const cors = require("cors");
 const rateLimit = require("express-rate-limit");
 const mongoSanitize = require("express-mongo-sanitize");
@@ -12,18 +11,16 @@ const authRouter = require("./routes/authRoutes");
 const paletteRouter = require("./routes/paletteRoutes");
 
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
+  windowMs: 15 * 60 * 1000,
+  max: 100,
   message: "Too many accounts created from this IP, please try again after a minute",
 });
 
 const app = express();
 
 // Middlewares
-
 app.use(express.json());
 app.use(morgan("common"));
-// app.use(helmet());
 app.use(
   cors({
     origin: "*",
@@ -31,11 +28,13 @@ app.use(
   })
 );
 
-// app.use(limiter); //  apply to all requests
+app.use(limiter);
 
+//Security
 app.use(mongoSanitize());
 app.use(xss());
 
+//Serving static files
 app.use(express.static(`${__dirname}/assets`));
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();

@@ -31,6 +31,6 @@ process.on("unhandledRejection", (err) => {
   console.log(err.name, err.message);
   console.log("Unhandled rejection! Shutting down execution.");
   server.close(() => {
-    process.exit(1); //1 refers to uncaught exception
+    process.exit(1);
   });
 });
