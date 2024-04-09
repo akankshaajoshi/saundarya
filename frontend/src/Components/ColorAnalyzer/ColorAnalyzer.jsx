@@ -21,19 +21,6 @@ const ColorAnalyzer = () => {
 
   const handleClick = (e) => {
     if (selectedColors.length >= 3) {
-      query({
-        // inputs: `my skin tone is ${selectedColors[0]}, lip color is ${selectedColors[1]} what shade of colors would look good on me, give 10 colors in hex code and json format {"colors": []}, don't write anything else`,
-        inputs: `my skin tone is ${selectedColors[0]}, hair color is ${selectedColors[1]}, what is my color analysis season, give 10 different color shades in hex and json`,
-      }).then((response) => {
-        console.log(JSON.stringify(response));
-        const text = JSON.stringify(response);
-        const regex = /#([0-9A-Fa-f]{6})/g;
-        const extractedHexCodes = [...text.matchAll(regex)].map((match) => match[0]).slice(3);
-        setHexCodes(extractedHexCodes);
-        console.log(extractedHexCodes);
-
-        // console.log(response);
-      });
       return;
     }
 
@@ -49,6 +36,24 @@ const ColorAnalyzer = () => {
     const color = `#${((1 << 24) | (pixel[0] << 16) | (pixel[1] << 8) | pixel[2]).toString(16).slice(1)}`;
     setSelectedColors((prevColors) => [...prevColors, color]);
     console.log(color);
+  };
+
+  const handleGenerate = () => {
+    if (selectedColors.length >= 3) {
+      query({
+        inputs: `my skin tone is ${selectedColors[0]}, hair color is ${selectedColors[1]}, what is my color analysis season, give 10 different unique colors for my season in hex and response in json only`,
+      }).then((response) => {
+        const text = JSON.stringify(response);
+        const regex = /#([0-9A-Fa-f]{6})/g;
+        const extractedHexCodes = [...text.matchAll(regex)].map((match) => match[0]).slice(3);
+        setHexCodes(extractedHexCodes);
+      });
+    }
+  };
+
+  const handleReset = () => {
+    setHexCodes([]);
+    setSelectedColors([]);
   };
 
   const handleImageChange = (event) => {
@@ -67,7 +72,7 @@ const ColorAnalyzer = () => {
         <img src={previewURL} alt="Preview" onClick={handleClick} style={{ width: "100%", height: "auto" }} />
       )}
       {selectedColors.map((color, index) => (
-        <div key={index}>
+        <div key={color}>
           <div className="label">{items[index]} Color</div>
           <div
             key={index}
@@ -90,6 +95,8 @@ const ColorAnalyzer = () => {
           }}
         ></div>
       ))}
+      <button onClick={handleGenerate}>Generate</button>
+      <button onClick={handleReset}>Reset</button>
     </div>
   );
 };
