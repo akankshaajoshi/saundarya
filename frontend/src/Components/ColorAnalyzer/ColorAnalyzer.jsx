@@ -7,9 +7,9 @@ const ColorAnalyzer = () => {
   const items = ["Skin", "Hair", "Eye"];
 
   async function query(data) {
-    const response = await fetch("https://api-inference.huggingface.co/models/google/gemma-7b-it", {
+    const response = await fetch("https://api-inference.huggingface.co/models/google/gemma-1.1-7b-it", {
       headers: {
-        Authorization: "Bearer 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",
+        Authorization: "Bearer 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",
         "Content-Type": "application/json",
       },
       method: "POST",
