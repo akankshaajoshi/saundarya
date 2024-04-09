@@ -20,13 +20,18 @@ const limiter = rateLimit({
 const app = express();
 
 // Middlewares
-app.use("/api", limiter);
 
 app.use(express.json());
 app.use(morgan("common"));
-app.use(helmet());
-app.use(cors());
-app.use(limiter); //  apply to all requests
+// app.use(helmet());
+app.use(
+  cors({
+    origin: "*",
+    methods: "GET,POST",
+  })
+);
+
+// app.use(limiter); //  apply to all requests
 
 app.use(mongoSanitize());
 app.use(xss());
