@@ -5,6 +5,7 @@ import LoginForm from "./Components/LoginForm/LoginForm";
 import RegisterForm from "././Components/RegisterForm/RegisterForm";
 import Home from "./Components/Home/Home";
 import ColorAnalyzer from "./Components/ColorAnalyzer/ColorAnalyzer";
+import TryOn from "./Components/TryOn/TryOn";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/test" element={<ColorAnalyzer />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegisterForm />} />
+          <Route path="/try-on" element={<TryOn />} />
         </Routes>
       </div>
     </Router>

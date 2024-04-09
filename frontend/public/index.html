@@ -4,11 +4,10 @@
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-face-aframe.prod.js"></script> -->
     <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
+    <meta name="description" content="Web site created using create-react-app" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
@@ -24,20 +23,376 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-face-aframe.prod.js"></script> -->
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-face-aframe.prod.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const list = ["glasses1", "glasses2", "hat1", "hat2", "earring", "lip", "tshirt"];
+        const visibles = [false, false, false, false, false, false, true];
+        const setVisible = (button, entities, visible) => {
+          if (visible) {
+            button.classList.add("selected");
+          } else {
+            button.classList.remove("selected");
+          }
+          entities.forEach((entity) => {
+            entity.setAttribute("visible", visible);
+          });
+        };
+        list.forEach((item, index) => {
+          const button = document.querySelector("#" + item);
+          const entities = document.querySelectorAll("." + item + "-entity");
+          setVisible(button, entities, visibles[index]);
+          button.addEventListener("click", () => {
+            visibles[index] = !visibles[index];
+            console.log(item);
+            setVisible(button, entities, visibles[index]);
+          });
+        });
+      });
+    </script>
+    <style>
+
+      .example-container {
+        overflow: hidden;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+      .options-panel {
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 2;
+      }
+      .options-panel img {
+        border: solid 2px;
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        cursor: pointer;
+      }
+      .options-panel img.selected {
+        border-color: green;
+      }
+
+      body {
+  font-family: "Lato", sans-serif;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+
+.scrollable-div {
+  display: flex;
+  overflow-x: auto;
+  width: 250px; /* Adjust this value to control how many boxes are visible at once */
+  margin: 10px;
+  border: 1px solid #f1f1f1;
+  margin-right: 10px;
+  padding: 10px 10px 10px 0;
+}
+ *::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.box {
+  flex: 0 0 auto;
+  width: 50px;
+  height: 50px;
+  margin-left: 20px;
+  background-color: #f1f1f1;
+}
+
+    </style>
+    <script>
+       function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+      }
+      
+      function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+      }
+      AFRAME.registerComponent("model-color", {
+        schema: {
+          color: { type: "color", default: "#185ea2" },
+        },
+        init: function () {
+          this.el.addEventListener("model-loaded", () => this.update());
+        },
+        update: function () {
+          var object3D = this.el.object3D;
+          var color = new THREE.Color(this.data.color);
+          object3D.traverse((node) => {
+            if (node.isMesh) {
+              node.material.color = color;
+            }
+          });
+        },
+      });
+    </script>
     <title>React App</title>
   </head>
   <body>
+    <div class="example-container">
+      <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="#">Saved Palettes</a>
+        <div class="scrollable-div">
+          <div class="box"></div>
+          <div class="box"></div>
+          <div class="box"></div>
+          <div class="box"></div>
+          <div class="box"></div>
+          <div class="box"></div>
+          <!-- Add as many divs as you want -->
+        </div>
+        <div class="scrollable-div">
+          <div class="box"></div>
+          <div class="box"></div>
+          <div class="box"></div>
+          <div class="box"></div>
+          <div class="box"></div>
+          <div class="box"></div>
+          <!-- Add as many divs as you want -->
+        </div>
+        <div class="scrollable-div">
+          <div class="box"></div>
+          <div class="box"></div>
+          <div class="box"></div>
+          <div class="box"></div>
+          <div class="box"></div>
+          <div class="box"></div>
+          <!-- Add as many divs as you want -->
+        </div>
+        <a href="#">Default Palettes</a>
+        <div class="scrollable-div">
+          <div class="box"></div>
+          <div class="box"></div>
+          <div class="box"></div>
+          <div class="box"></div>
+          <div class="box"></div>
+          <div class="box"></div>
+          <!-- Add as many divs as you want -->
+        </div>
+        <div class="scrollable-div">
+          <div class="box"></div>
+          <div class="box"></div>
+          <div class="box"></div>
+          <div class="box"></div>
+          <div class="box"></div>
+          <div class="box"></div>
+          <!-- Add as many divs as you want -->
+        </div>
+        <div class="scrollable-div">
+          <div class="box"></div>
+          <div class="box"></div>
+          <div class="box"></div>
+          <div class="box"></div>
+          <div class="box"></div>
+          <div class="box"></div>
+          <!-- Add as many divs as you want -->
+        </div>
+      </div>
+      
+      <span style="font-size:40px;padding:5px;margin:10px;color:white;background-color:black;border-radius:10px;cursor:pointer;float:right" onclick="openNav()">&#9776;</span>
+
+      <!-- TODO: Finished component -->
+      <!-- <div class="options-panel">
+        <img
+          id="hat1"
+          src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/hat/thumbnail.png"
+        />
+        <img
+          id="hat2"
+          src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/hat2/thumbnail.png"
+        />
+        <img
+          id="glasses1"
+          src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/glasses/thumbnail.png"
+        />
+        <img
+          id="glasses2"
+          src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/glasses2/thumbnail.png"
+        />
+        <img
+          id="earring"
+          src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/earring/thumbnail.png"
+        />
+        <img id="lip" src="https://t4.ftcdn.net/jpg/02/49/12/13/240_F_249121346_FoiYkyX6rA34YwoVSfsFfbfh0ommMiiS.jpg" />
+        <img id="tshirt" src="https://5.imimg.com/data5/UK/VR/AX/SELLER-3518303/blank-t-shirt-500x500.jpg" />
+      </div> -->
+      <!-- <a-scene
+        mindar-face
+        embedded
+        color-space="sRGB"
+        renderer="colorManagement: true, physicallyCorrectLights"
+        vr-mode-ui="enabled: false"
+        device-orientation-permission-ui="enabled: false"
+      >
+        <a-assets>
+          <a-asset-item
+            id="headModel"
+            src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/sparkar/headOccluder.glb"
+          ></a-asset-item>
+          <a-asset-item
+            id="glassesModel"
+            src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/glasses/scene.gltf"
+          ></a-asset-item>
+          <a-asset-item
+            id="glassesModel2"
+            src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/glasses2/scene.gltf"
+          ></a-asset-item>
+          <a-asset-item
+            id="hatModel"
+            src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/hat/scene.gltf"
+          ></a-asset-item>
+          <a-asset-item
+            id="hatModel2"
+            src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/hat2/scene.gltf"
+          ></a-asset-item>
+          <a-asset-item
+            id="earringModel"
+            src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/earring/scene.gltf"
+          ></a-asset-item>
+          <a-asset-item id="lipModel" src="http://localhost:8000/lips/scene.gltf"></a-asset-item>
+        </a-assets>
+        <a-asset-item id="tshirtModel" src="http://localhost:8000/tshirt/scene.gltf"></a-asset-item>
+      </a-assets>
+        <a-camera active="false" position="0 0 0"></a-camera>
+        head occluder
+        <a-entity mindar-face-target="anchorIndex: 168">
+          <a-gltf-model
+            mindar-face-occluder
+            position="0 -0.3 0.15"
+            rotation="0 0 0"
+            scale="0.065 0.065 0.065"
+            src="#headModel"
+          ></a-gltf-model>
+        </a-entity>
+        <a-entity mindar-face-target="anchorIndex: 10">
+          <a-gltf-model
+            rotation="0 -0 0"
+            position="0 1.0 -0.5"
+            scale="0.35 0.35 0.35"
+            src="#hatModel"
+            class="hat1-entity"
+            visible="false"
+          ></a-gltf-model>
+        </a-entity>
+        <a-entity mindar-face-target="anchorIndex: 10">
+          <a-gltf-model
+            rotation="0 -0 0"
+            position="0 -0.2 -0.5"
+            scale="0.008 0.008 0.008"
+            src="#hatModel2"
+            class="hat2-entity"
+            visible="false"
+          ></a-gltf-model>
+        </a-entity>
+        <a-entity mindar-face-target="anchorIndex: 168">
+          <a-gltf-model
+            rotation="0 -0 0"
+            position="0 0 0"
+            scale="0.01 0.01 0.01"
+            src="#glassesModel"
+            class="glasses1-entity"
+            visible="false"
+          ></a-gltf-model>
+        </a-entity>
+        <a-entity mindar-face-target="anchorIndex: 168">
+          <a-gltf-model
+            rotation="0 -90 0"
+            position="0 -0.3 0"
+            scale="0.6 0.6 0.6"
+            src="#glassesModel2"
+            class="glasses2-entity"
+            visible="false"
+          ></a-gltf-model>
+        </a-entity>
+        <a-entity mindar-face-target="anchorIndex: 127">
+          <a-gltf-model
+            rotation="-0.1 -0 0"
+            position="0 -0.3 -0.3"
+            scale="0.05 0.05 0.05"
+            src="#earringModel"
+            class="earring-entity"
+            visible="false"
+          ></a-gltf-model>
+        </a-entity>
+        <a-entity mindar-face-target="anchorIndex: 356">
+          <a-gltf-model
+            rotation="0.1 -0 0"
+            position="0 -0.3 -0.3"
+            scale="0.05 0.05 0.05"
+            src="#earringModel"
+            class="earring-entity"
+            visible="false"
+          ></a-gltf-model>
+        </a-entity>
+        <a-entity mindar-face-target="anchorIndex: 14">
+          <a-gltf-model
+            src="#lipModel"
+            position="0 -0.01 0"
+            scale="0.08 0.06 0.06"
+            class="lip-entity"
+            visible="false"
+            model-color="color: brown"
+          ></a-gltf-model>
+        </a-entity>
+        <a-entity mindar-face-target="anchorIndex: 175">
+          <a-gltf-model
+          position="0 -11.5 0"
+          scale="5 7 7"
+            src="#tshirtModel"
+            class="tshirt-entity"
+            visible="false"
+            model-color="color: black"
+          ></a-gltf-model>
+        </a-entity>
+      </a-scene> 
+    </div>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
   </body>
 </html>

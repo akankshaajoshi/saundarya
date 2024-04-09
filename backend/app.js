@@ -31,7 +31,7 @@ app.use(limiter); //  apply to all requests
 app.use(mongoSanitize());
 app.use(xss());
 
-app.use(express.static(`${__dirname}/public`));
+app.use(express.static(`${__dirname}/assets`));
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   next();
