@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 const RegisterForm = () => {
     return (
-        <div className = 'wrapper' style={{backgroundColor:'rgba(169, 121, 108, 0.75)'}}>
+        <div className = 'wrapper' style={{backgroundColor:'#a5711e'}}>
             <form actions ="">
                 <h1>Register</h1>
                 <div className = "input-box">
