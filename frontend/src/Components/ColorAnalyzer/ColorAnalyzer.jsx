@@ -12,7 +12,7 @@ const ColorAnalyzer = () => {
   const handleSave = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/v1/palette",
+        "https://saundarya.onrender.com/api/v1/palette",
         {
           name: `Save ${Date.now()}`,
           palettes: hexCodes,
@@ -37,7 +37,6 @@ const ColorAnalyzer = () => {
       method: "POST",
       body: JSON.stringify(data),
     });
-    console.log(process.env.REACT_APP_HUGGING_FACE_BEARER_TOKEN);
     const result = await response.json();
     return result;
   }

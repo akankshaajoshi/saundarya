@@ -27,7 +27,7 @@ const RegisterForm = () => {
     };
     console.log(userData);
     try {
-      const response = await axios.post("http://localhost:8000/api/v1/auth/signup", userData);
+      const response = await axios.post("https://saundarya.onrender.com/api/v1/auth/signup", userData);
       login(response.data.email, response.data.password);
     } catch (error) {
       console.error(error);

@@ -16,7 +16,7 @@ const LoginForm = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8000/api/v1/auth/login", { email, password });
+      const response = await axios.post("https://saundarya.onrender.com/api/v1/auth/login", { email, password });
       login(email, password);
       if (response) navigate("/");
     } catch (err) {
