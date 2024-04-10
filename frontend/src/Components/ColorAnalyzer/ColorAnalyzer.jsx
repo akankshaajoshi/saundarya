@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./ColourAnalyzer.css";
 import axios from "axios";
-import Cookies from "js-cookie";
 
 const ColorAnalyzer = () => {
   const [previewURL, setPreviewURL] = useState("");
@@ -19,7 +18,7 @@ const ColorAnalyzer = () => {
         },
         {
           headers: {
-            Authorization: `Bearer ${Cookies.get("jwt")}`,
+            Authorization: `Bearer ${localStorage.getItem('jwt')}`,
           },
         }
       );

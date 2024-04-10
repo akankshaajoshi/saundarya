@@ -11,13 +11,15 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const login = (email, password) => {
+  const login = (token, email, password) => {
     localStorage.setItem("user", email);
+    localStorage.setItem("jwt", token);
     setUser({ email });
   };
 
   const logout = () => {
     localStorage.setItem("user", null);
+    localStorage.setItem("jwt", null);
     setUser(null);
   };
 
