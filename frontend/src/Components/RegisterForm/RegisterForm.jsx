@@ -29,7 +29,7 @@ const RegisterForm = () => {
     try {
       const response = await axios.post("https://saundarya.onrender.com/api/v1/auth/signup", userData);
       login(response.data.email, response.data.password);
-      navigate('/');
+      navigate("/");
     } catch (error) {
       console.error(error);
     }
@@ -39,7 +39,7 @@ const RegisterForm = () => {
       <form onSubmit={handleSubmit}>
         <h1>Register</h1>
         <div className="input-box">
-          <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="name" required></input>
+          <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" required></input>
           <FaUser className="icon" />
         </div>
         <div className="input-box">
