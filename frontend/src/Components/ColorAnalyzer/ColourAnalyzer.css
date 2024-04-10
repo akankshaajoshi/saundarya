@@ -1,0 +1,114 @@
+.outer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    padding: 50px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+}
+
+.image-container {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+    align-items: left;
+    flex: 1;
+    width: 100%;
+}
+
+.preview-image {
+    width: 300px;
+    height: 300px;
+    cursor: pointer;
+    align-items: center;
+}
+
+input[type="file"] {
+    width: 100px;
+}
+
+.operations-container {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    gap: 40px;
+    color: black;
+    width: 100%;
+}
+
+.color-box {
+    margin-bottom: 10px;
+}
+
+.label {
+    font-size: 16px;
+}
+
+.color {
+    width: 60px;
+    height: 60px;
+    border: 5px solid;
+}
+
+button {
+    margin: 10px;
+    padding: 10px;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    background-color: rgb(244, 238, 238);
+    cursor: pointer;
+}
+
+.heading {
+    font-size: 30px;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+.instructions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: black;
+    padding-bottom: 60px;
+}
+
+.subheading {
+    font-size: 20px;
+}
+
+.cols {
+    display: flex;
+    flex-direction: row;
+}
+
+.selected-colors {
+    padding: 10px;
+}
+
+.hex-codes {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 40vw;
+}
