@@ -34,7 +34,7 @@ const Home = () => {
                 advanced AI algorithms to analyze your skin tone and suggest the perfect makeup and dressing color
                 palette tailored just for you.
               </p>
-              <Link to="/test">
+              <Link to="/analyse">
                 <button className="button1">Get Started</button>
               </Link>
             </div>
