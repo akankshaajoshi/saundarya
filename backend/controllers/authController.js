@@ -19,10 +19,8 @@ const createSendToken = (user, statusCode, res) => {
   const cookieOptions = {
     expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000),
     secure: true,
-    httpOnly: true,
   };
 
-  if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
   res.cookie("jwt", token, cookieOptions);
 
   //Remove password
@@ -87,7 +85,6 @@ exports.protect = catchAsync(async (req, res, next) => {
   req.user = freshUser;
   next();
 });
-
 
 exports.forgotPassword = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
