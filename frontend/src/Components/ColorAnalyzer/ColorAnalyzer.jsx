@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./ColourAnalyzer.css"; // Import the CSS file
 
 const ColorAnalyzer = () => {
   const [previewURL, setPreviewURL] = useState("");
@@ -9,7 +10,7 @@ const ColorAnalyzer = () => {
   async function query(data) {
     const response = await fetch("https://api-inference.huggingface.co/models/google/gemma-1.1-7b-it", {
       headers: {
-        Authorization: "Bearer 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",
+        Authorization: "Bearer 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",
         "Content-Type": "application/json",
       },
       method: "POST",
@@ -66,37 +67,38 @@ const ColorAnalyzer = () => {
   };
 
   return (
-    <div>
-      <input type="file" onChange={handleImageChange} />
-      {previewURL && (
-        <img src={previewURL} alt="Preview" onClick={handleClick} style={{ width: "100%", height: "auto" }} />
-      )}
-      {selectedColors.map((color, index) => (
-        <div key={color}>
-          <div className="label">{items[index]} Color</div>
-          <div
-            key={index}
-            style={{
-              width: "60px",
-              height: "60px",
-              border: "5px solid",
-              backgroundColor: color,
-            }}
-          ></div>
+    <div className="outer">
+      <div className="container">
+        <div className="image-container">
+          <input type="file" onChange={handleImageChange} />
+          {previewURL && <img src={previewURL} alt="Preview" onClick={handleClick} className="preview-image" />}
         </div>
-      ))}
-      {hexCodes?.map((code) => (
-        <div
-          style={{
-            width: "60px",
-            height: "60px",
-            border: "5px solid",
-            backgroundColor: code,
-          }}
-        ></div>
-      ))}
-      <button onClick={handleGenerate}>Generate</button>
-      <button onClick={handleReset}>Reset</button>
+        <div className="operations-container">
+          {selectedColors.map((color, index) => (
+            <div key={color} className="color-box">
+              <div className="label">{items[index]} Color</div>
+              <div
+                className="color"
+                style={{
+                  backgroundColor: color,
+                }}
+              ></div>
+            </div>
+          ))}
+          {hexCodes?.map((code, index) => (
+            <div key={index} className="color-box">
+              <div
+                className="color"
+                style={{
+                  backgroundColor: code,
+                }}
+              ></div>
+            </div>
+          ))}
+          <button onClick={handleGenerate}>Generate</button>
+          <button onClick={handleReset}>Reset</button>
+        </div>
+      </div>
     </div>
   );
 };

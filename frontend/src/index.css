@@ -12,7 +12,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   display: flex;
   min-height: 100vh;
-  background: url('./Components/Assets/background3.jpg');
+  background: linear-gradient(to bottom, #785600, #dcb473);
   background-size: cover;
   background-position: center;
 }

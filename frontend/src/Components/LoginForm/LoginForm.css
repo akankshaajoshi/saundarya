@@ -1,6 +1,10 @@
+.bg{
+    background-image: url('./img2.jpeg');
+    background-size: cover;
+}
+
 .wrapper{
     width: 420px;
-    
     border: 2px solid rgba(255, 255, 255, .2);
     box-shadow: 10px 10px 10px rgba(0, 0, 0, .2);
     color: #fff;
@@ -34,7 +38,7 @@
     background: transparent;
     border: none;
     outline: none;
-    border: 2px solid rgba(255, 255, 255, .2);
+    border: 2px solid #a5711e;
     border-radius: 40px;
     font-size: 16px;
     color: #fff;
