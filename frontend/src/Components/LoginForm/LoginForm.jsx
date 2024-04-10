@@ -4,6 +4,7 @@ import { FaUser } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { AuthContext } from "./../../context/AuthContext";
 
 const LoginForm = () => {
@@ -24,7 +25,7 @@ const LoginForm = () => {
   };
   return (
     <div className="bg">
-      <div className="wrapper" style={{ backgroundColor: "#a5711e" }}>
+      <div className="wrapper" style={{ backgroundColor: "rgba(169, 121, 108, 0.75)" }}>
         <form onSubmit={handleLogin}>
           <h1>Login</h1>
           <div className="input-box">
@@ -40,10 +41,16 @@ const LoginForm = () => {
             ></input>
             <RiLockPasswordFill className="icon" />
           </div>
-          <div className="rember-forgot">
+          <div className="remember-forgot">
             <a href="#" style={{ color: "white", display: "block", textAlign: "center" }}>
               Forgot Password?
-            </a>
+            </a>{" "}
+            <Link
+              to="/register"
+              style={{ color: "white", display: "block", textAlign: "center", fontWeight: "semibold" }}
+            >
+              Register
+            </Link>
           </div>
           <button type="submit">Login</button>
         </form>

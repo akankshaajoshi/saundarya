@@ -7,9 +7,6 @@
     padding: 2% 5.8%;
 }
 
-/* Increase gap between navbar and home box */
-
-
 .logo {
     font-size: 1.5rem;
     font-weight: bold;
@@ -32,14 +29,15 @@
 
 .home-content {
     color: #fff;
-    padding: 10% 5%; /* Adjust vertical padding */
+    padding: 10% 5%;
+    /* Adjust vertical padding */
 }
 
 .home-box {
     border: 2px;
     padding: 50px;
-    background-image:url('./img2.jpeg');
-    background-size: cover; 
+    background-image: url('./img2.jpeg');
+    background-size: cover;
     /* Increase gap between home boxes */
     color: #fff;
 }
@@ -67,12 +65,12 @@
 .text-content {
     flex: 1;
     justify-content: center;
-     /* Increase vertical gap */
-     padding-right: 55%;
-     padding-left: 3%;
+    /* Increase vertical gap */
+    padding-right: 55%;
+    padding-left: 3%;
 }
 
-.text-content p{
+.text-content p {
     margin-top: 20px;
     margin-bottom: 40px;
     justify-content: center;
@@ -80,7 +78,8 @@
 }
 
 .image-content img {
-    max-width: 100%; /* Ensure image doesn't exceed container width */
+    max-width: 100%;
+    /* Ensure image doesn't exceed container width */
     width: 25vw;
     border-radius: 5%;
 }
@@ -131,7 +130,7 @@
     font-weight: 600;
 }
 
-.features h2{
+.features h2 {
     padding-left: 62%;
 }
 
@@ -158,16 +157,20 @@
 .contact-item {
     width: calc(50% - 20px);
     margin: 10px;
-    text-align: center; /* Center text */
+    text-align: center;
+    /* Center text */
 }
 
 .contact-item img {
-    max-width: 100%; /* Adjusted max width */
-    width:25vw;
+    max-width: 100%;
+    /* Adjusted max width */
+    width: 25vw;
     height: 25vw;
     border-radius: 50%;
-    display: block; /* Ensure images don't have any residual spacing */
-    margin: 0 auto; /* Center image horizontally */
+    display: block;
+    /* Ensure images don't have any residual spacing */
+    margin: 0 auto;
+    /* Center image horizontally */
     margin-bottom: 25px;
 }
 

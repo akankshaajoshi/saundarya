@@ -1,11 +1,32 @@
 import React, { useState } from "react";
-import "./ColourAnalyzer.css"; // Import the CSS file
+import "./ColourAnalyzer.css";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 const ColorAnalyzer = () => {
   const [previewURL, setPreviewURL] = useState("");
   const [selectedColors, setSelectedColors] = useState([]);
   const [hexCodes, setHexCodes] = useState([]);
   const items = ["Skin", "Hair", "Eye"];
+
+  const handleSave = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/v1/palette",
+        {
+          name: `Save ${Date.now()}`,
+          palettes: hexCodes,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${Cookies.get("jwt")}`,
+          },
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   async function query(data) {
     const response = await fetch("https://api-inference.huggingface.co/models/google/gemma-1.1-7b-it", {
@@ -36,7 +57,6 @@ const ColorAnalyzer = () => {
     const pixel = context.getImageData(x, y, 1, 1).data;
     const color = `#${((1 << 24) | (pixel[0] << 16) | (pixel[1] << 8) | pixel[2]).toString(16).slice(1)}`;
     setSelectedColors((prevColors) => [...prevColors, color]);
-    console.log(color);
   };
 
   const handleGenerate = () => {
@@ -69,34 +89,56 @@ const ColorAnalyzer = () => {
   return (
     <div className="outer">
       <div className="container">
-        <div className="image-container">
-          <input type="file" onChange={handleImageChange} />
-          {previewURL && <img src={previewURL} alt="Preview" onClick={handleClick} className="preview-image" />}
+        <div className="instructions">
+          <div className="heading">Pick an image</div>
+          <div className="subheading">
+            We recommend choosing an image clicked in natural light for the best results. <br />
+            <div className="content">
+              Select in order the part which resembles the most with your - skin color, hair color, and eye color from
+              the image.
+            </div>
+          </div>
         </div>
-        <div className="operations-container">
-          {selectedColors.map((color, index) => (
-            <div key={color} className="color-box">
-              <div className="label">{items[index]} Color</div>
-              <div
-                className="color"
-                style={{
-                  backgroundColor: color,
-                }}
-              ></div>
+        <div className="cols">
+          <div className="image-container">
+            {previewURL && <img src={previewURL} alt="Preview" onClick={handleClick} className="preview-image" />}
+            <input type="file" onChange={handleImageChange} />
+          </div>
+          <div className="operations-container">
+            <div className="selected-colors">
+              {selectedColors.map((color, index) => (
+                <div key={color} className="color-box">
+                  <div className="label">{items[index]}</div>
+                  <div
+                    className="color"
+                    style={{
+                      backgroundColor: color,
+                    }}
+                  ></div>
+                </div>
+              ))}
             </div>
-          ))}
-          {hexCodes?.map((code, index) => (
-            <div key={index} className="color-box">
-              <div
-                className="color"
-                style={{
-                  backgroundColor: code,
-                }}
-              ></div>
+            <div className="suggestions">
+              <div className="subheading">Suggested palette:</div>
+              <div className="hex-codes">
+                {hexCodes?.map((code, index) => (
+                  <div key={index} className="color-box">
+                    <div
+                      className="color"
+                      style={{
+                        backgroundColor: code,
+                      }}
+                    ></div>
+                  </div>
+                ))}
+              </div>
+              <div>
+                <button onClick={handleGenerate}>Generate</button>
+                <button onClick={handleReset}>Reset</button>
+                {hexCodes.length > 0 && <button onClick={handleSave}>Save</button>}
+              </div>
             </div>
-          ))}
-          <button onClick={handleGenerate}>Generate</button>
-          <button onClick={handleReset}>Reset</button>
+          </div>
         </div>
       </div>
     </div>

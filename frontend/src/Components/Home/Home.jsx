@@ -1,26 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Home.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
-import img1 from "./img1.jpeg";
 import indu from "./indu.jpg";
 import akanksha from "./akanksha.jpg";
 import FAQMenu from "./FAQMenu.jsx";
 import { Link } from "react-router-dom";
 
 const Home = () => {
-  const [openQuestion, setOpenQuestion] = useState(null);
-
-  // Function to toggle the visibility of the answer
-  const toggleAnswer = (questionId) => {
-    setOpenQuestion(openQuestion === questionId ? null : questionId);
-  };
-
   return (
     <div>
       <nav className="navbar">
         <a className="logo" style={{ fontStyle: "italic" }}>
-          SOUNDARYA
+          SAUNDARYA
         </a>
         <i className="fa-solid fa-bars" id="menu-icon"></i>
         <div className="navbar-links">
