@@ -1,15 +1,11 @@
 import "./Home.css";
-import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 import indu from "./indu.jpg";
 import akanksha from "./akanksha.jpg";
 import FAQMenu from "./FAQMenu.jsx";
 import { Link } from "react-router-dom";
-import { AuthContext } from "./../../context/AuthContext.js";
 
 const Home = () => {
-  const { user, logout } = useContext(AuthContext);
-  const navigate = useNavigate();
   return (
     <div>
       <nav className="navbar">
@@ -22,20 +18,7 @@ const Home = () => {
           <a href="#features">Features</a>
           <Link to="/analyse">Analyse</Link>
           <Link to="/try-on">Try on AR</Link>
-          {user != null ? (
-            <div
-              className="navbar-links"
-              onClick={() => {
-                logout();
-                navigate("/login");
-              }}
-            >
-              {" "}
-              Logout
-            </div>
-          ) : (
-            <Link to="/login">Login</Link>
-          )}
+          <Link to="/login">Login</Link>
         </div>
       </nav>
       <section className="home-container" id="about">
