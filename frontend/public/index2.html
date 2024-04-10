@@ -132,7 +132,7 @@
           .find((row) => row.startsWith("jwt"))
           .split("=")[1];
 
-        fetch("http://localhost:8000/api/v1/palette", {
+        fetch("https://saundarya.onrender.com/api/v1/palette", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MTQxOTBkOTVhNDZjZmJhMDI3NDcyZSIsImlhdCI6MTcxMjY1MTMxNiwiZXhwIjoxNzEyOTEwNTE2fQ.A6SGp_oqNZc5ClT2d4SzqJwFJ4p7dxPW2vCQUplIzlo"}`,
@@ -391,8 +391,8 @@
             id="glassesModel2"
             src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/glasses2/scene.gltf"
           ></a-asset-item>
-          <a-asset-item id="lipModel" src="http://localhost:8000/lips/scene.gltf"></a-asset-item>
-          <a-asset-item id="tshirtModel" src="http://localhost:8000/tshirt/scene.gltf"></a-asset-item>
+          <a-asset-item id="lipModel" src="https://saundarya.onrender.com/lips/scene.gltf"></a-asset-item>
+          <a-asset-item id="tshirtModel" src="https://saundarya.onrender.com/tshirt/scene.gltf"></a-asset-item>
         </a-assets>
         <a-camera active="false" position="0 0 0"></a-camera>
         <!-- head occluder -->
