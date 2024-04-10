@@ -31,12 +31,13 @@ const ColorAnalyzer = () => {
   async function query(data) {
     const response = await fetch("https://api-inference.huggingface.co/models/google/gemma-1.1-7b-it", {
       headers: {
-        Authorization: "Bearer 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",
+        Authorization: `Bearer ${process.env.REACT_APP_HUGGING_FACE_BEARER_TOKEN}`,
         "Content-Type": "application/json",
       },
       method: "POST",
       body: JSON.stringify(data),
     });
+    console.log(process.env.REACT_APP_HUGGING_FACE_BEARER_TOKEN);
     const result = await response.json();
     return result;
   }
