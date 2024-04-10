@@ -4,7 +4,7 @@
     align-items: center;
     background-color: #785600;
     width: 100%;
-    padding: 2% 5.8%;
+    padding: 1% 5.8%;
 }
 
 .logo {
@@ -21,6 +21,16 @@
     margin-right: 50px;
     text-decoration: none;
     color: #fff;
+    padding: 10px;
+}
+
+.navbar-links div {
+    text-decoration: none;
+    color: #fff;
+    padding: 10px;
+    background-color: #890000;
+    border-radius: 10px;
+    cursor: pointer;
 }
 
 .navbar-links a:hover {
