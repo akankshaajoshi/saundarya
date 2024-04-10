@@ -1,9 +1,11 @@
-import React from "react";
 import "./Home.css";
+import React from "react";
 import indu from "./indu.jpg";
 import akanksha from "./akanksha.jpg";
 import FAQMenu from "./FAQMenu.jsx";
 import { Link } from "react-router-dom";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // Import carousel styles
 
 const Home = () => {
   return (
@@ -16,9 +18,9 @@ const Home = () => {
         <div className="navbar-links">
           <a href="#about">About</a>
           <a href="#features">Features</a>
-          <a href="#FAQ">FAQ</a>
-          <a href="#contact">Contact</a>
-          <a href="/login">Login</a>
+          <Link to="/analyse">Analyse</Link>
+          <Link to="/try-on">Try on AR</Link>
+          <Link to="/login">Login</Link>
         </div>
       </nav>
       <section className="home-container" id="about">
@@ -58,6 +60,45 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* <section className="products-section" id="products">
+        <h2>Browse Products</h2>
+        <Carousel>
+          <div>
+            <img
+              src="https://assets.vogue.in/photos/62fcc42c73e663a411081140/master/w_1600%2Cc_limit/ILIA%2520Limitless%2520Lash%2520Mascara.jpg"
+              alt="Product 1"
+              className="product-image"
+            />
+            <p className="legend">NX Cosmetics</p>
+          </div>
+          <div>
+            <img
+              src="https://media.self.com/photos/57dc14dbbcf2c5c50b7d004a/master/pass/makeup-skin-tone-nars-orgasm-blush.jpg"
+              alt="Product 2"
+              className="product-image"
+            />
+            <p className="legend">Maybelliene XX</p>
+          </div>
+          <div>
+            <img
+              src="https://d2hy56m2o6qi9y.cloudfront.net/wp-content/uploads/2020/10/12171309/1-Natural-Glow.jpg"
+              alt="Product 3"
+              className="product-image"
+            />
+            <p className="legend">Huda Contour</p>
+          </div>
+          <div>
+            <img
+              src="https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1604633691-mented-1604633674.jpg?crop=1xw:1xh;center,top&resize=980:*"
+              alt="Product 3"
+              className="product-image"
+            />
+            <p className="legend">Mented Lip#23</p>
+          </div>
+        </Carousel>
+      </section> */}
+
       <section className="faq-section" id="FAQ">
         <FAQMenu />
       </section>
@@ -80,7 +121,7 @@ const Home = () => {
       </section>
       <footer>
         <div style={{ backgroundColor: "black", height: "60px", color: "white", textAlign: "center", padding: "20px" }}>
-          <h>All Rights Reserved</h>
+          <p>&copy; 2024 Saundarya. All rights reserved.</p>
         </div>
       </footer>
     </div>

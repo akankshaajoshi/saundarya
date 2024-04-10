@@ -7,18 +7,14 @@ const FAQMenu = () => {
   const [currentlyActive, setCurrentlyActive] = useState(1);
 
   const handleAccordionClick = (newActiveAccordion) => {
-    setCurrentlyActive(
-      newActiveAccordion === currentlyActive ? null : newActiveAccordion
-    );
-    console.log(`currently active item: ${currentlyActive}`);
-    console.log(
-      `newly active item: ${newActiveAccordion} previous active item ${currentlyActive}`
-    );
+    setCurrentlyActive(newActiveAccordion === currentlyActive ? null : newActiveAccordion);
   };
 
   return (
-    <div className="accordion-menu" id = "FAQs">
-      <h5 className="title font-weight-bold text-warning" style = {{fontSize:"30px", color:"#fff"}}>FAQ'S - Frequently Asked Questions</h5>
+    <div className="accordion-menu" id="FAQs">
+      <h5 className="title font-weight-bold text-warning" style={{ fontSize: "30px", color: "#fff" }}>
+        FAQ'S - Frequently Asked Questions
+      </h5>
       <div className="accordion-items">
         <FAQItem
           title="Is Soundarya free?"
