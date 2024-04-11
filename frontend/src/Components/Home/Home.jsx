@@ -41,6 +41,9 @@ const Home = () => {
                                 algorithms to analyze your skin tone and suggest the perfect makeup and
                                 dressing color palette tailored just for you.
                             </p>
+                            <p>Step1: upload an image</p>
+                            <p>Step2: Select your skin, Hair and Eye colors from the image</p>
+                            <p>Generate and see magic!</p>
                             <Link to = "/test"><button className="button1">Get Started</button></Link>
                         </div>
                     </div>
@@ -80,7 +83,7 @@ const Home = () => {
                         <img src={indu} alt="" />
                         <p>Developer</p>
                         <p>Akanksha Joshi</p>
-                        <p style={{color:'rgb(0, 0, 88)'}}>email: akanksha.joshi@gmail.com</p>
+                        <p style={{color:'rgb(0, 0, 88)'}}>email: joshiaj33@gmail.com</p>
                     </div>
                 </div>
             </section>

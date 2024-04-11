@@ -8,7 +8,7 @@ const ColorAnalyzer = () => {
   const items = ["Skin", "Hair", "Eye"];
 
   async function query(data) {
-    const response = await fetch("https://api-inference.huggingface.co/models/google/gemma-7b-it", {
+    const response = await fetch("https://api-inference.huggingface.co/models/google/gemma-1.1-7b-it", {
       headers: {
         Authorization: "Bearer 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",
         "Content-Type": "application/json",
@@ -70,7 +70,7 @@ const ColorAnalyzer = () => {
   return (
     <div className="outer">
       <div className="container">
-        <div className="image-container">
+        <div className="operations-container">
           <input type="file" onChange={handleImageChange} />
           {previewURL && (
             <img
@@ -80,8 +80,6 @@ const ColorAnalyzer = () => {
               className="preview-image"
             />
           )}
-        </div>
-        <div className="operations-container">
           {selectedColors.map((color, index) => (
             <div key={color} className="color-box">
               <div className="label">{items[index]} Color</div>
@@ -93,26 +91,33 @@ const ColorAnalyzer = () => {
               ></div>
             </div>
           ))}
-          {hexCodes?.map((code, index) => (
-            <div
-              key={index}
-              className="color-box"
-            >
-              <div
-                className="color"
-                style={{
-                  backgroundColor: code,
-                }}
-              ></div>
+          {hexCodes.length > 0 && (
+            <div className="color-palette">
+              <h2>Suitable Color Palette</h2>
+              <div className="palette-container">
+                {hexCodes.map((code, index) => (
+                  <div
+                    key={index}
+                    className="color-box"
+                  >
+                    <div
+                      className="color"
+                      style={{
+                        backgroundColor: code,
+                      }}
+                    ></div>
+                  </div>
+                ))}
+              </div>
             </div>
-          ))}
+          )}
           <button onClick={handleGenerate}>Generate</button>
           <button onClick={handleReset}>Reset</button>
         </div>
       </div>
     </div>
   );
-
 };
 
 export default ColorAnalyzer;
+

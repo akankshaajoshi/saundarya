@@ -17,9 +17,10 @@
 .image-container {
     margin-right: 20px;
     align-items: center;
+    padding: 30px;
 }
 
-.preview-image {
+/* .preview-image {
     width: 300px;
     height: 300px;
     cursor: pointer;
@@ -30,7 +31,19 @@
 .operations-container {
     display: flex;
     flex-direction: column;
-}
+} */
+
+.operations-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .preview-image {
+    margin-top: 20px;
+    max-width: 300px;
+  }
+  
 
 .color-box {
     margin-bottom: 10px;
@@ -49,3 +62,21 @@
 button {
     margin-top: 10px;
 }
+
+.color-palette {
+    margin-top: 20px;
+  }
+  
+  .palette-container {
+    display: flex;
+    overflow-x: auto;
+  }
+  
+  .palette-container .color-box {
+    margin-right: 10px;
+  }
+  
+  .color-palette h2 {
+    margin-bottom: 10px;
+  }
+  
